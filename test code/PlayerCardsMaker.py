@@ -8,7 +8,8 @@ import time
 import os
 
 
-img = Image.open('background.png')
+img = Image.open('blank.png')
+#put image last
 draw = ImageDraw.Draw(img)
 
 # ========================== USERNAME ==========================
@@ -127,9 +128,9 @@ x0 = x - 10
 y0 = y
 x1 = x + text_length + 5
 y1 = y + user_input_font_size + 5
-img = Image.open("background.png").convert("RGBA")
+img = Image.open("blank.png").convert("RGBA")
 IMG_Name_Rec = ImageDraw.Draw(img)
-IMG_Name_Rec.rounded_rectangle([(x0, y0), (x1, y1)], radius=0, fill=(0, 0, 0, 5), outline=None, width=1, corners=None)
+IMG_Name_Rec.rounded_rectangle([(x0, y0), (x1, y1)], radius=15, fill=(0, 0, 0, 128), outline=None, width=1, corners=None)
 
 
 
@@ -183,51 +184,51 @@ if statselection[0] == 1:
 elif statselection[0] == 2:
     stat1 = "Kills: " + str(stat1)
 elif statselection[0] == 3:
-    stat1 = "Average kills per season: " + str(stat1)
+    stat1 = "Avg kills: " + str(stat1)
 elif statselection[0] == 4:
     stat1 = "Best placement: " + str(stat1)
 elif statselection[0] == 5:
     stat1 = "Worst placement: " + str(stat1)
 elif statselection[0] == 6:
-    stat1 = "Average placement: " + str(stat1)
+    stat1 = "Avg placement: " + str(stat1)
 elif statselection[0] == 7:
-    stat1 = "Chaos Life placement: " + str(stat1)
+    stat1 = "CHL placement: " + str(stat1)
 elif statselection[0] == 8:
-    stat1 = "Chaos Life^2 placement: " + str(stat1)
+    stat1 = "CHL^2 placement: " + str(stat1)
 
 if statselection[1] == 1:
     stat2 = "Final kills: " + str(stat2)
 elif statselection[1] == 2:
     stat2 = "Kills: " + str(stat2)
 elif statselection[1] == 3:
-    stat2 = "Average kills per season: " + str(stat2)
+    stat2 = "Avg kills: " + str(stat2)
 elif statselection[1] == 4:
     stat2 = "Best placement: " + str(stat2)
 elif statselection[1] == 5:
     stat2 = "Worst placement: " + str(stat2)
 elif statselection[1] == 6:
-    stat2 = "Average placement: " + str(stat2)
+    stat2 = "Avg placement: " + str(stat2)
 elif statselection[1] == 7:
-    stat2 = "Chaos Life placement: " + str(stat2)
+    stat2 = "CHL placement: " + str(stat2)
 elif statselection[1] == 8:
-    stat2 = "Chaos Life^2 placement: " + str(stat2)
+    stat2 = "CHL^2 placement: " + str(stat2)
 
 if statselection[2] == 1:
     stat3 = "Final kills: " + str(stat3)
 elif statselection[2] == 2:
     stat3 = "Kills: " + str(stat3)
 elif statselection[2] == 3:
-    stat3 = "Average kills per season: " + str(stat3)
+    stat3 = "Avg kills: " + str(stat3)
 elif statselection[2] == 4:
     stat3 = "Best placement: " + str(stat3)
 elif statselection[2] == 5:
     stat3 = "Worst placement: " + str(stat3)
 elif statselection[2] == 6:
-    stat3 = "Average placement: " + str(stat3)
+    stat3 = "Avg placement: " + str(stat3)
 elif statselection[2] == 7:
-    stat3 = "Chaos Life placement: " + str(stat3)
+    stat3 = "CHL placement: " + str(stat3)
 elif statselection[2] == 8:
-    stat3 = "Chaos Life^2 placement: " + str(stat3)
+    stat3 = "CHL^2 placement: " + str(stat3)
 
 
 text_length = draw.textlength(stat1, font)
@@ -254,5 +255,12 @@ y = 700
 IMG_stat3 = ImageDraw.Draw(img)
 IMG_stat3.text((x,y), f"{stat3}", fill=(R_value, G_value, B_value, 255), font=font)
 
-img.show()
-img.save("playercard.png")
+
+img.save("stats.png")
+
+background = Image.open("background.png")
+overlay = Image.open("stats.png")
+final_image = Image.alpha_composite(background.convert("RGBA"), overlay.convert("RGBA"))
+final_image.show()
+final_image.save("final_stats.png")
+

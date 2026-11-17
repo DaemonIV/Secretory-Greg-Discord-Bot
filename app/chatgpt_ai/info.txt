@@ -60,6 +60,15 @@ TNT Minecarting traps are limited to 4 carts
 VCing or using SVC groups during a session is not allowed. Use in-game chat or prox chat (SVC).
 Play for fun and try not to sweat
 
+ITEM LIMITS
+This is the amount of items people are allowed per fight. People may call these parameters player limits or item limits.
+Golden apples (8 per fight)
+Ender pearls (4 per fight)
+Cobwebs (16 per fight)
+Wind charges (16 per fight)
+If you accidently used a few too many, no worries just be weary of these limits as people's lives may be refunded (items won't be)
+These will be especially monitored during finale
+
 DISCORD RULES
 Don't harass people
 Understand and respect people's boundaries

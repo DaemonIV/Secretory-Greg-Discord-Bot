@@ -1,5 +1,5 @@
-from app.discord_bot.discord_api import client, discord_token
+from app.discord_bot.discord_api import bot, discord_token
 
 if __name__ == '__main__':
-    client.run(discord_token)
+    bot.run(discord_token)
     

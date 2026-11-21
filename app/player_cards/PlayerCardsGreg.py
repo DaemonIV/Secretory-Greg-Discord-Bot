@@ -7,16 +7,10 @@ from PIL import ImageFont
 import time
 import os
 
-def generate_player_card(user_input_username, user_input_font, user_input_colour, user_input_font_size, statselection1, statselection2, statselection3, background_choice):
+def generate_player_card(user_input_username, user_input_font, user_input_colour, user_input_font_size, pose, statselection1, statselection2, statselection3, background_choice):
     img = Image.open('blank.png')
     draw = ImageDraw.Draw(img)
     # ========================== USERNAME AND USER INPUTS ==========================
-
-
-    user_input_font = 0
-    user_input_colour = ""
-    user_input_font_size = 99
-    user_input_username = ""
 
     player_list_uuid = []
     player_list_name = []
@@ -52,7 +46,7 @@ def generate_player_card(user_input_username, user_input_font, user_input_colour
         
         
 
-    user_input_username = input("Enter your username: ")
+
     player_name_case_sens = user_input_username
     while user_input_username.lower() not in [name.lower() for name in player_list_name]:
         print("Username not found in the player list. Please enter a valid username.")
@@ -64,7 +58,7 @@ def generate_player_card(user_input_username, user_input_font, user_input_colour
     player_list_name.reverse()
     player_uuid = player_list_uuid[player_list_name.index(user_input_username.lower()) - 1]
 
-    pose = 0
+   
     pose = int(input("What kind of pose do you want?: \n 1. Default \n 2. Marching \n 3. Walking \n 4. Crouching \n 5. Crossed \n 6. Criss Cross \n 7. Ultimate \n 8. Isometric \n 9. Head \n 10. Cheering \n 11. Relaxing \n 12. Trudging \n 13. Cowering \n 14. Pointing \n 15. Lunging \n 16. Dungeons \n 17. Facepalm \n 18. Sleeping \n 19. Dead \n 20. Archer \n 21. Kicking \n 22. Mojavatar \n 23. Reading \n 24. High Ground \n 25. Clown \n 26. Bitzel \n 27. Pixel \n 28. Ornament \n 29. Profile \n"))
     while pose < 1 or pose > 29:
         print("Invalid input. Please enter a number between 1 and 29.")

@@ -3,6 +3,7 @@ import discord
 import os
 from app.chatgpt_ai.ai_client import chatgpt_response
 from app.player_cards.PlayerCardsGreg import generate_player_card
+import traceback
 
 load_dotenv()
 
@@ -46,27 +47,29 @@ BACKGROUND_CHOICES = [
 ]
 
 POSE_CHOICES = [
-    "Default", "Marching", "Crouching", "Crossed", "Criss-cross", "Ultimate", "Isometric", "Head", " Cheering", "Relaxing", "Trudging", "Cowering", "Pointing", "Lunging", "Dungeons", "Facepalm", "Sleeping" , "Dead", "Archer", "Kicking", "Reading", "High ground", "Clown", "Bitzel", "Pixel", "Profile"] 
+    "Default", "Marching", "Crouching", "Crossed", "Criss_cross", "Ultimate", " Cheering", "Relaxing", "Trudging", "Cowering", "Pointing", "Lunging", "Dungeons", "Facepalm", "Sleeping" , "Dead", "Archer", "Kicking", "Reading", "High_ground", "Clown"] 
 
 
 @bot.slash_command(
     name="playercards",
     description="Generate a playercard!",
-    guild_ids=[1471211723603050661],
+    guild_ids=[1485667965167861942],
 )
 async def playercards(
     ctx: discord.ApplicationContext,
-    username: discord.Option(str, "Enter your username"),
+    username: discord.Option(str, "Enter your username", required=True),
     font: discord.Option(
         str,
         "Choose a font",
         choices=["Minecraft", "Minecraft Bold", "Trashhand (Life series font)"],
         default="Minecraft",
+        required=True
     ),
     colour: discord.Option(
         str,
         "Enter a hex colour code (e.g. FF5733)",
         default="FFFFFF",
+        required=True
     ),
     font_size: discord.Option(
         int,
@@ -74,42 +77,48 @@ async def playercards(
         min_value=100,
         max_value=255,
         default=100,
+        required=True
     ),
     pose: discord.Option(
         str,
         "Choose a pose",
         choices=POSE_CHOICES,
         default="Default",
+        required=True
     ),
     stat1: discord.Option(
         str,
         "Choose your first stat",
         choices=STAT_CHOICES,
         default="Final Kills",
+        required=True
     ),
     stat2: discord.Option(
         str,
         "Choose your second stat",
         choices=STAT_CHOICES,
         default="Kills",
+        required=True
     ),
     stat3: discord.Option(
         str,
         "Choose your third stat",
         choices=STAT_CHOICES,
         default="Average Kills per season",
+        required=True
     ),
     background: discord.Option(
         str,
         "Choose a background",
         choices=BACKGROUND_CHOICES,
         default="Enchanted Warped Forest",
+        required=True
     ),
 ):
     await ctx.defer()
     
-
-    generate_player_card(
+    try:
+        generate_player_card(
         user_input_username=username,
         user_input_font=font,
         user_input_colour=colour,
@@ -120,8 +129,24 @@ async def playercards(
         statselection3=stat3,
         background_choice=background,
     )
+    
+        await ctx.respond(file=discord.File("player card.png"))
+    except Exception as e:
+        
+    
+        traceback.print_exc()
 
-    await ctx.respond(file=discord.File("stats.png"))
+   
+        if ctx.interaction.response.is_done():
+            await ctx.followup.send(
+            "An error occurred. Check your terminal console for details.",
+            ephemeral=True,
+        )
+        else:
+            await ctx.respond(
+                "An error occurred. Check your terminal console for details.",
+                ephemeral=True,
+            )
 
 
 discord_token = os.getenv('DISCORD_TOKEN')

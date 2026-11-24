@@ -18,6 +18,7 @@ def generate_player_card(user_input_username, user_input_font, user_input_colour
     player_list_uuid = csv_data['UUID'].tolist()
 
     a = len(player_list_uuid)
+    b = 0
     while a != -1:
         a -= 1
         uuid = player_list_uuid[a]
@@ -41,6 +42,11 @@ def generate_player_card(user_input_username, user_input_font, user_input_colour
         player_list_name.append(data['name'])
         time.sleep(1)
 
+        if player_list_name[b] == user_input_username.lower():
+            player_uuid = uuid
+            break
+        b = b + 1
+        print(b)
 
 
         
@@ -55,73 +61,8 @@ def generate_player_card(user_input_username, user_input_font, user_input_colour
         user_input_username = user_input_username.lower()
 
 
-    player_list_name.reverse()
-    player_uuid = player_list_uuid[player_list_name.index(user_input_username.lower()) - 1]
 
    
-    pose = int(input("What kind of pose do you want?: \n 1. Default \n 2. Marching \n 3. Walking \n 4. Crouching \n 5. Crossed \n 6. Criss Cross \n 7. Ultimate \n 8. Isometric \n 9. Head \n 10. Cheering \n 11. Relaxing \n 12. Trudging \n 13. Cowering \n 14. Pointing \n 15. Lunging \n 16. Dungeons \n 17. Facepalm \n 18. Sleeping \n 19. Dead \n 20. Archer \n 21. Kicking \n 22. Mojavatar \n 23. Reading \n 24. High Ground \n 25. Clown \n 26. Bitzel \n 27. Pixel \n 28. Ornament \n 29. Profile \n"))
-    while pose < 1 or pose > 29:
-        print("Invalid input. Please enter a number between 1 and 29.")
-        pose = int(input("What kind of pose do you want?: \n 1. Default \n 2. Marching \n 3. Walking \n 4. Crouching \n 5. Crossed \n 6. Criss Cross \n 7. Ultimate \n 8. Isometric \n 9. Head \n 10. Cheering \n 11. Relaxing \n 12. Trudging \n 13. Cowering \n 14. Pointing \n 15. Lunging \n 16. Dungeons \n 17. Facepalm \n 18. Sleeping \n 19. Dead \n 20. Archer \n 21. Kicking \n 22. Mojavatar \n 23. Reading \n 24. High Ground \n 25. Clown \n 26. Bitzel \n 27. Pixel \n 28. Ornament \n 29. Profile \n"))
-
-    if pose == 1:
-        pose = "default"
-    elif pose == 2: 
-        pose = "marching"
-    elif pose == 3:
-        pose = "walking"
-    elif pose == 4:
-        pose = "crouching"
-    elif pose == 5:
-        pose = "crossed"    
-    elif pose == 6:
-        pose = "criss_cross"
-    elif pose == 7:
-        pose = "ultimate"
-    elif pose == 8:
-        pose = "isometric"
-    elif pose == 9:
-        pose = "head"
-    elif pose == 10:
-        pose = "cheering"
-    elif pose == 11:
-        pose = "relaxing"
-    elif pose == 12:
-        pose = "trudging"
-    elif pose == 13:
-        pose = "cowering"
-    elif pose == 14:
-        pose = "pointing"
-    elif pose == 15:
-        pose = "lunging"
-    elif pose == 16:
-        pose = "dungeons"
-    elif pose == 17: 
-        pose = "facepalm"
-    elif pose == 18:
-        pose = "sleeping"
-    elif pose == 19:
-        pose = "dead"
-    elif pose == 20:
-        pose = "archer"
-    elif pose == 21:
-        pose = "kicking"
-    elif pose == 22:
-        pose = "mojavatar"
-    elif pose == 23:
-        pose = "reading"
-    elif pose == 24:
-        pose = "high_ground"
-    elif pose == 25:
-        pose = "clown"
-    elif pose == 26:
-        pose = "bitzel"
-    elif pose == 27:
-        pose = "pixel"
-    elif pose == 28:
-        pose = "ornament"
-    elif pose == 29:
-        pose = "profile"
 
     url = f"https://starlight.lunareclipse.studio/api/v1/render/{pose}/{player_uuid}/full"
     response = requests.get(url)
@@ -131,6 +72,7 @@ def generate_player_card(user_input_username, user_input_font, user_input_colour
             print("Player skin downloaded successfully.")
     else:
         print(f"Failed to download player skin. Status code: {response.status_code}")
+        print(url)
         
 
     for row_idx, row in enumerate(csv_data.itertuples(index=False), start=1):
@@ -139,26 +81,13 @@ def generate_player_card(user_input_username, user_input_font, user_input_colour
             break
 
 
-    while user_input_font not in [1, 2, 3]:
-        try:
-            user_input_font = int(input("Enter what font you wish: \n1. Minecraft \n2. Minecraft bold \n3. Trashhand (Official life series font) \n"))
-            if user_input_font not in [1, 2, 3]:
-                print("Invalid input. Please enter a number between 1 and 3.")
-        except ValueError:
-            print("Invalid input. Please enter a number between 1 and 3.")
-    while user_input_font_size < 100 or user_input_font_size > 255:
-        try:
-            user_input_font_size = int(input("Enter the font size you wish (100-255): "))
-            if user_input_font_size < 100 or user_input_font_size > 255:
-                print("Invalid input. Please enter a number between 100 and 255.")
-        except ValueError:
-            print("Invalid input. Please enter a number between 100 and 255.")
+    
 
-    if user_input_font == 1:
+    if user_input_font == "Minecraft":
         font = ImageFont.truetype("Minecraft.otf", user_input_font_size)
-    elif user_input_font == 2:
+    elif user_input_font == "Minecraft Bold":
         font = ImageFont.truetype("MinecraftBold.otf", user_input_font_size)
-    elif user_input_font == 3:
+    elif user_input_font == "Trashhand":
         font = ImageFont.truetype("TrashHand.ttf", user_input_font_size)
 
 
@@ -194,7 +123,7 @@ def generate_player_card(user_input_username, user_input_font, user_input_colour
 
 
     #========================= ADDING PLAYER NAME ==========================   
-
+    
     text_length = draw.textlength(player_name_case_sens, font)
     x = ((img.width - text_length) / 2) - 5
     y = img.height / 1.1 - user_input_font_size / 2
@@ -211,120 +140,52 @@ def generate_player_card(user_input_username, user_input_font, user_input_colour
     IMG_username.text((x, y), player_name_case_sens, fill=(R_value, G_value, B_value, 255), font=font)
 
     #========================= STATISTICS ==========================
+
+
+
     stat_mapping = {
-        1: 0, #'Final_Kills',
-        2: 1, #'Kills',
-        3: 2, #'Average_kills_per_season',
-        4: 3, #'Worst_placement',
-        5: 4, #'Best_placement',
-        6: 5, #'Average_placement',
-        7: 6, #'Chaos_Life_placement',
-        8: 7, #'Chaos_Life2_placement' 
+        1: 0,  # Final_Kills
+        2: 1,  # Kills
+        3: 2,  # Average_kills_per_season
+        4: 3,  # Worst_placement
+        5: 4,  # Best_placement
+        6: 5,  # Average_placement
+        7: 6,  # Chaos_Life_placement
+        8: 7   # Chaos_Life2_placement 
     }
 
-    menu_text = (
-        "Select a statistic: \n"
-        "1. Final kills \n2. Kills \n3. Average kills per season \n"
-        "4. Worst placement \n5. Best placement \n6. Average placement \n"
-        "7. Chaos Life placement \n8. Chaos Life^2 placement \n"
-    )
+    stat_name_mapping = {
+        1: "Final kills: ",
+        2: "Kills: ",
+        3: "Avg kills: ",
+        4: "Worst placement: ",
+        5: "Best placement: ",
+        6: "Avg placement: ",
+        7: "CHL placement: ",
+        8: "CHL^2 placement: "
+    }
 
-    statselection = []
+    stat_string_to_id = {
+        "Final Kills": 1,
+        "Kills": 2,
+        "Average Kills per season": 3,
+        "Worst placement": 4,
+        "Best placement": 5,
+        "Average placement": 6,
+        "Chaos Life": 7,
+        "Chaos Life^2": 8
+    }
 
-    while statselection1 not in (stat_mapping):
-        try:
-            statselection1 = int(input(f"Enter your stat #1 choice:\n" + menu_text))
-            if statselection1 in (stat_mapping):
-                statselection.append(statselection1)
-                stat_value = player_row[stat_mapping[statselection1]]
-                globals()["stat1"] = stat_value
-            else:
-                print("Please pick a number from 1 to 8.")
-        except ValueError:
-            print("Please enter a valid integer number.")
+    statselection = [
+        stat_string_to_id.get(statselection1, 1),
+        stat_string_to_id.get(statselection2, 2),
+        stat_string_to_id.get(statselection3, 3)
+    ]
 
-    while statselection2 not in (stat_mapping):
-        try:
-            statselection2 = int(input(f"Enter your stat #2 choice:\n" + menu_text))
-            if statselection2 in (stat_mapping):
-                statselection.append(statselection2)
-                stat_value = player_row[stat_mapping[statselection2]]
-                globals()["stat2"] = stat_value
-            else:
-                print("Please pick a number from 1 to 8.")
-        except ValueError:
-            print("Please enter a valid integer number.")
-
-    while statselection3 not in (stat_mapping):
-        try:
-            statselection3 = int(input(f"Enter your stat #3 choice:\n" + menu_text))
-            if statselection3 in (stat_mapping):
-                statselection.append(statselection3)
-                stat_value = player_row[stat_mapping[statselection3]]
-                globals()["stat3"] = stat_value
-            else:
-                print("Please pick a number from 1 to 8.")
-        except ValueError:
-            print("Please enter a valid integer number.")
-
-    #print(player_row)
-
-
-
-    #print(f"Stat 1: {stat1}")
-    #print(f"Stat 2: {stat2}")
-    #print(f"Stat 3: {stat3}")
-
-    if statselection[0] == 1:
-        stat1 = "Final kills: " + str(stat1)
-    elif statselection[0] == 2:
-        stat1 = "Kills: " + str(stat1)
-    elif statselection[0] == 3:
-        stat1 = "Avg kills: " + str(stat1)
-    elif statselection[0] == 4:
-        stat1 = "Worst placement: " + str(stat1)
-    elif statselection[0] == 5:
-        stat1 = "Best placement: " + str(stat1)
-    elif statselection[0] == 6:
-        stat1 = "Avg placement: " + str(stat1)
-    elif statselection[0] == 7:
-        stat1 = "CHL placement: " + str(stat1)
-    elif statselection[0] == 8:
-        stat1 = "CHL^2 placement: " + str(stat1)
-
-    if statselection[1] == 1:
-        stat2 = "Final kills: " + str(stat2)
-    elif statselection[1] == 2:
-        stat2 = "Kills: " + str(stat2)
-    elif statselection[1] == 3:
-        stat2 = "Avg kills: " + str(stat2)
-    elif statselection[1] == 4:
-        stat2 = "Worst placement: " + str(stat2)
-    elif statselection[1] == 5:
-        stat2 = "Best placement: " + str(stat2)
-    elif statselection[1] == 6:
-        stat2 = "Avg placement: " + str(stat2)
-    elif statselection[1] == 7:
-        stat2 = "CHL placement: " + str(stat2)
-    elif statselection[1] == 8:
-        stat2 = "CHL^2 placement: " + str(stat2)
-
-    if statselection[2] == 1:
-        stat3 = "Final kills: " + str(stat3)
-    elif statselection[2] == 2:
-        stat3 = "Kills: " + str(stat3)
-    elif statselection[2] == 3:
-        stat3 = "Avg kills: " + str(stat3)
-    elif statselection[2] == 4:
-        stat3 = "Worst placement: " + str(stat3)
-    elif statselection[2] == 5:
-        stat3 = "Best placement: " + str(stat3)
-    elif statselection[2] == 6:
-        stat3 = "Avg placement: " + str(stat3)
-    elif statselection[2] == 7:
-        stat3 = "CHL placement: " + str(stat3)
-    elif statselection[2] == 8:
-        stat3 = "CHL^2 placement: " + str(stat3)
+    # Fixed bug: correctly index each stat using its respective selection value
+    stat1 = stat_name_mapping[statselection[0]] + str(player_row[stat_mapping[statselection[0]]])
+    stat2 = stat_name_mapping[statselection[1]] + str(player_row[stat_mapping[statselection[1]]])
+    stat3 = stat_name_mapping[statselection[2]] + str(player_row[stat_mapping[statselection[2]]])
 
     text_length1 = draw.textlength(stat1, font)
     text_length2 = draw.textlength(stat2, font)
@@ -370,11 +231,29 @@ def generate_player_card(user_input_username, user_input_font, user_input_colour
     #========================= FINAL IMAGE ==========================
 
 
-    background_choice = 0
-    while background_choice not in [1,2,3,4,5,6,7,8,9,10]:
-        background_choice = int(input("Enter what background you wish: \n1. Enchanted Warped Forest \n2. Bloody Crimson \n3. Mooshroom Isles \n4. Grand Canyon \n5. Distant Horizons \n6. Dappled Hills \n7. Mountain's Peak \n8. Cherry Mountains \n9. Skeleton Meadows \n10. Pale Highlands \n"))
+    if background_choice == "Enchanted Warped Forest":
+        background_choice = "1"
+    elif background_choice == "Bloody Crimson":
+        background_choice = "2"
+    elif background_choice == "Mooshroom Isles":
+        background_choice = "3"
+    elif background_choice == "Grand Canyon":
+        background_choice = "4"
+    elif background_choice == "Distant Horizons":
+        background_choice = "5"
+    elif background_choice == "Dappled Hills":
+        background_choice = "6"
+    elif background_choice == "Mountain's Peak":
+        background_choice = "7"
+    elif background_choice == "Cherry Mountains":
+        background_choice = "8"
+    elif background_choice == "Skeleton Meadows":
+        background_choice = "9"
+    elif background_choice == "Pale Highlands":
+        background_choice = "10"
+    
 
-    background_choice = str(background_choice)
+    
     background_choice = background_choice + ".png"
 
     background = Image.open(background_choice)
@@ -384,6 +263,7 @@ def generate_player_card(user_input_username, user_input_font, user_input_colour
     background.paste(overlay, (0, 0), overlay)
 
     background.save("player card.png")
+    print("Player card generated successfully as 'player card.png'.")
 
         
 

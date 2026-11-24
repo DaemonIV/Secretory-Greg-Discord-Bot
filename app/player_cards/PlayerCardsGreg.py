@@ -56,10 +56,7 @@ def generate_player_card(user_input_username, user_input_font, user_input_colour
     player_name_case_sens = user_input_username
     while user_input_username.lower() not in [name.lower() for name in player_list_name]:
         print("Username not found in the player list. Please enter a valid username.")
-        user_input_username = input("Enter your username: ")
-        player_name_case_sens = user_input_username
-        user_input_username = user_input_username.lower()
-
+        return
 
 
    
